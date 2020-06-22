@@ -7,8 +7,30 @@ Page({
   data: {
     number:6,
     array:[],
+    originalarray:[],
+    likearray:[],
+    mostlikearray:[],
     change:true,
     openid:'',
+  },
+  likelist:function(){
+    // console.log('likelist');
+    var that=this;
+    // console.log(this.data.originalarray);
+    this.setData({
+        array:that.data.likearray
+    })
+
+    // wx.request({
+    //     url: 'http://192.168.31.249:3001/posts/likelist', //仅为示例，并非真实的接口地址
+    //     method:'GET',
+    //     data:{
+    //         openid:that.data.openid
+    //     },
+    //     success:function(res){
+
+    //     }
+    // })
   },
   Submit:function(e){
     var that=this
@@ -83,10 +105,21 @@ Page({
                 success (res) {
                     // console.log(res.data);
                     // console.log('????')
+                    res.data.forEach((item,index)=>{
+                        // console.log(item);
+                        if(item.like==1){
+                            that.data.likearray.push(item);
+                        }
+                        
+                    })
+                     // that.setData({likearray:that.data.likearray})
                     that.setData({
-                      array:res.data
+                        originalarray:res.data,
+                      array:res.data,
+                      // likearray:that.data.likearray
                     });
-                    console.log(that.data.array)
+                    // console.log(that.data.array)
+                    console.log(that.data.likearray);
                    // users_like_this_post
             },
                 fail:function(err){

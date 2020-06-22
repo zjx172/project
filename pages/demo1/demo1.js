@@ -25,15 +25,15 @@ Page({
       sourceType: ['album', 'camera'],
       success (res) {
         // tempFilePath可以作为img标签的src属性显示图片
-        var tempFilePaths = res.tempFilePaths[0]
+        // var tempFilePaths = res.tempFilePaths[0]
         // console.log(tempFilePaths);
         wx.getFileSystemManager().readFile({
           filePath:res.tempFilePaths[0],
           encoding:'base64',
           success:res=>{
-            console.log('data:image/png;base64,'+res.data);
+        //    console.log('data:image/png;base64,'+res.data);
 
-            tempFilePaths='data:image/png;base64,'+res.data;
+            var tempFilePaths='data:image/png;base64,'+res.data;
             const item={
               src:tempFilePaths
             };
@@ -41,6 +41,7 @@ Page({
             that.setData({
               array:that.data.array
             });
+            console.log(that.data.array);
           }
         })
         // console.log(tempFilePaths);
@@ -100,12 +101,18 @@ Page({
       success (res) {
         // console.log('????')
         console.log("上传成功！");
-        console.log(res.data)
+        // console.log(res.data)
         // wx.navigateTo({
         //     url: '../home/home',
         // })
         wx.switchTab({
-          url: '../home/home'
+          url: '/pages/home/home',
+          success:function(){
+            var page = getCurrentPages().pop();
+            if (page == undefined || page == null) return;
+            page.onReady();
+            console.log("???onLoad");
+          }
         })
       }
     })

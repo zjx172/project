@@ -4,10 +4,31 @@
         <text class="word">发现吃喝玩乐</text>
         <!-- <view class="tagcollection"> -->
             <swiper class="tagcollection" previous-margin="34rpx" >
-                <swiper-item class="swiper-item" wx:for="{{number}}" wx:key="item">
+              <!--   <swiper-item class="swiper-item" wx:for="{{number}}" wx:key="item">
                     <view class="i">
                         <view class="inside">
                             <view class="inside-word">我点赞的</view>
+                        </view>
+                    </view>
+                </swiper-item> -->
+                <swiper-item class="swiper-item">
+                    <view class="i">
+                        <view class="inside">
+                            <view class="inside-word" bindtap="likelist">我点赞的</view>
+                        </view>
+                    </view>
+                </swiper-item>
+                <swiper-item class="swiper-item">
+                    <view class="i">
+                        <view class="inside">
+                            <view class="inside-word">热度排序</view>
+                        </view>
+                    </view>
+                </swiper-item>
+                <swiper-item class="swiper-item">
+                    <view class="i">
+                        <view class="inside">
+                            <view class="inside-word">时间排序</view>
                         </view>
                     </view>
                 </swiper-item>
