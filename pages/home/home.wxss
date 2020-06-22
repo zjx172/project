@@ -1,0 +1,105 @@
+/* pages/home/home.wxss */
+.inside{
+    width:172rpx;
+    height: 100%;
+    background: red;
+    border-radius: 10rpx;
+    font-family:inpinheiti;
+    font-weight:400;
+    color:rgba(255,255,255,1);
+    /*line-height:40px;*/
+}
+.inside-word{
+    padding-top:66rpx;
+    display: flex;
+    justify-content: center;
+}
+.swiper-item{
+    width: 200rpx !important;
+    height: 130rpx;
+}
+.i{
+    width: 100%;
+    height: 100%;
+    margin-right: 18rpx !important;
+}
+.tagcollection{
+    margin-top:20rpx;
+    height: 130rpx;
+    width: 100vw;
+}
+.top{
+    width:750rpx;
+    background:linear-gradient(90deg,rgba(247,65,140,1) 0%,rgba(251,171,102,1) 100%);
+    padding-top:28rpx;
+    padding-bottom:78rpx;
+    min-height: 100%;
+}
+.word{
+    /* width:116px;
+    height:57px;*/
+    font-size:60rpx;
+    font-family:PingFang SC;
+    font-weight:bold;
+    color:rgba(255,255,255,1);
+    margin-left: 35rpx;
+}
+.item-word{
+    /*    width:305px;
+    height:23px;*/
+    font-size:24rpx;
+    font-family:SourceHanSansCN;
+    font-weight:bold;
+    color:rgba(58,48,77,1);
+    line-height:70rpx;
+}
+.photo-swiper{
+    height: 100%;
+    width: 100%;
+    /*background: green;*/
+    border-radius:30rpx 30rpx 0px 0px;
+}
+.image-photo{
+    width: 100%;
+     height: 100%;
+    /*height: auto;*/
+    border-radius:30rpx 30rpx 0px 0px;
+}
+.like{
+    /*background: red;*/
+}
+.aixin{
+    width: 56rpx;
+    height:49rpx;
+}
+.redh{
+    width: 56rpx;
+    height:56rpx;
+}
+.photo{
+    width:683rpx;
+    height:600rpx;
+    /*border-radius:30rpx 30rpx 0px 0px;*/
+    /*width:683px;
+    height:600px;*/
+    /*border-radius:30px 30px 0px 0px;*/
+    /*background: black;*/
+}
+.item{
+    width:683rpx;
+    /*height:600rpx;*/
+    border-radius:30rpx;
+    background:rgba(255,255,255,1);
+    box-shadow:0px 2px 48rpx 0px rgba(0, 0, 0, 0.07);
+    margin-top: 35rpx;
+    /*padding-top:25rpx;*/
+    padding-bottom:25rpx;
+    /*width:673px;
+    height:673px;
+    box-shadow:0px 2px 24px 0px rgba(0, 0, 0, 0.07);*/
+}
+.flex-item{
+    display: flex;
+    align-items: center;
+    flex-direction:  column;
+}

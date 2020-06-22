@@ -1,0 +1,40 @@
+<!--pages/home/home.wxml-->
+<view class="containner">
+    <view class="top">
+        <text class="word">发现吃喝玩乐</text>
+        <!-- <view class="tagcollection"> -->
+            <swiper class="tagcollection" previous-margin="34rpx" >
+                <swiper-item class="swiper-item" wx:for="{{number}}" wx:key="item">
+                    <view class="i">
+                        <view class="inside">
+                            <view class="inside-word">我点赞的</view>
+                        </view>
+                    </view>
+                </swiper-item>
+            </swiper>
+        <!-- </view> -->
+        <view class="flex-item" v-if="array.length>0">
+                <view class="item"  wx:for="{{array}}" wx:key="item">
+                    <view class="flex-item">
+                        <view class="photo">
+                            <swiper class="photo-swiper">
+                                <swiper-item  wx:for="{{item.photo}}" wx:for-item="photoitem" wx:key="photoitem">
+                                    <image class="image-photo" mode="aspectFit" src="{{photoitem.src}}"></image>
+                                </swiper-item>
+                            </swiper>
+                        </view>
+                    </view>
+                    <view class="like">
+                        <image wx:if="{{array[index].like!=0}}" bindtap="Submit" data-item="{{item}}" data-index="{{index}}" class="redh" src="../../image/心.png">
+                        </image>
+                        <image wx:else bindtap="Submit"  data-item="{{item}}" data-index="{{index}}"  class="aixin" src="../../image/xinaixin.png"></image>
+                        {{item.likenumber}}
+                    </view>
+                      <view class="item-word">{{item.text}}</view>
+                </view>
+             <!--    <view class="item"></view>
+                <view class="item"></view>
+                <view class="item"></view> -->
+        </view>
+    </view>
+</view>
