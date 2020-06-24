@@ -12,13 +12,33 @@ Page({
     mostlikearray:[],
     change:true,
     openid:'',
+    page:0,
   },
   likelist:function(){
     // console.log('likelist');
     var that=this;
     // console.log(this.data.originalarray);
-    this.setData({
-        array:that.data.likearray
+    // this.setData({
+    //     array:that.data.likearray
+    // })
+    that.data.page=0;
+     wx.request({
+        url: 'http://192.168.31.249:3001/posts/likelist',
+        method:'POST',
+        data:{
+          openid:that.data.openid,
+          page:that.data.page
+        },
+        success (res) {
+                console.log(res.data);
+                that.data.likearray=res.data;
+                console.log("点赞接口");
+                    that.setData({
+                        // originalarray:res.data,
+                      array:that.data.likearray
+                      // likearray:that.data.likearray
+                    });
+        }
     })
 
     // wx.request({
@@ -64,7 +84,7 @@ Page({
           openid:that.data.openid
       },
         success (res) {
-          console.log(res.data)
+          // console.log(res.data)
         }
     })
   },
@@ -97,10 +117,11 @@ Page({
                     openid:res.data.data.openid
                 })
                 wx.request({
-                    url: 'http://192.168.31.249:3001/posts/home', //仅为示例，并非真实的接口地址
+                    url: 'http://192.168.31.249:3001/posts/home',
                     method:'POST',
                     data:{
-                      openid:that.data.openid
+                      openid:that.data.openid,
+                      page:that.data.page
                     },
                 success (res) {
                     // console.log(res.data);
@@ -110,11 +131,13 @@ Page({
                         if(item.like==1){
                             that.data.likearray.push(item);
                         }
-                        
+
                     })
+                    that.data.originalarray=res.data;
+                    console.log(that.data.originalarray);
                      // that.setData({likearray:that.data.likearray})
                     that.setData({
-                        originalarray:res.data,
+                        // originalarray:res.data,
                       array:res.data,
                       // likearray:that.data.likearray
                     });
