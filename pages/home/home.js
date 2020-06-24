@@ -6,10 +6,10 @@ Page({
    */
   data: {
     number:6,
-    array:[],
-    originalarray:[],
-    likearray:[],
-    mostlikearray:[],
+    array:[],//显示列表
+    originalarray:[],//默认时间排序
+    likearray:[],//点赞排序
+    mostlikearray:[],//热度排序
     change:true,
     openid:'',
     page:0,
@@ -33,11 +33,11 @@ Page({
                 console.log(res.data);
                 that.data.likearray=res.data;
                 console.log("点赞接口");
-                    that.setData({
-                        // originalarray:res.data,
-                      array:that.data.likearray
-                      // likearray:that.data.likearray
-                    });
+                that.setData({
+                    // originalarray:res.data,
+                  array:that.data.likearray
+                  // likearray:that.data.likearray
+                });
         }
     })
 
@@ -51,6 +51,60 @@ Page({
 
     //     }
     // })
+  },
+  hotlist:function(){
+    var that=this;
+    that.data.page=0;
+    wx.request({
+        url: 'http://192.168.31.249:3001/posts/hotlist',
+        method:'POST',
+        data:{
+        openid:that.data.openid,
+        page:that.data.page
+    },
+    success (res) {
+        console.log(res.data);
+        that.data.mostlikearray=res.data;
+        that.setData({
+            array:that.data.mostlikearray
+        });
+        }
+    });
+  },
+  defalutlist:function(){
+    var that=this;
+    that.data.page=0;
+    wx.request({
+        url: 'http://192.168.31.249:3001/posts/home',
+        method:'POST',
+        data:{
+        openid:that.data.openid,
+        page:that.data.page
+    },
+    success (res) {
+        // console.log(res.data);
+        // console.log('????')
+        res.data.forEach((item,index)=>{
+            // console.log(item);
+            if(item.like==1){
+                that.data.likearray.push(item);
+            }
+        })
+        that.data.originalarray=res.data;
+        console.log(that.data.originalarray);
+        // that.setData({likearray:that.data.likearray})
+        that.setData({
+            // originalarray:res.data,
+            array:res.data,
+            // likearray:that.data.likearray
+        });
+        // console.log(that.data.array)
+        console.log(that.data.likearray);
+        }
+    });
+
+
+
   },
   Submit:function(e){
     var that=this

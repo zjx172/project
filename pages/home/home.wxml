@@ -14,21 +14,21 @@
                 <swiper-item class="swiper-item">
                     <view class="i">
                         <view class="inside">
-                            <view class="inside-word" bindtap="likelist">我点赞的</view>
+                            <view class="inside-word" bindtap="defalutlist">默认时间排序</view>
                         </view>
                     </view>
                 </swiper-item>
                 <swiper-item class="swiper-item">
                     <view class="i">
-                        <view class="inside">
+                        <view class="inside" bindtap="hotlist">
                             <view class="inside-word">热度排序</view>
                         </view>
                     </view>
                 </swiper-item>
                 <swiper-item class="swiper-item">
                     <view class="i">
-                        <view class="inside">
-                            <view class="inside-word">时间排序</view>
+                           <view class="inside">
+                            <view class="inside-word" bindtap="likelist">我点赞的</view>
                         </view>
                     </view>
                 </swiper-item>
