@@ -5,16 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    array: [
-      // {
-      //   src: 'https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg'
-      // },  
-      // {
-      // src: 'https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg'
-      // },{
-      //  src: 'https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg'
-      // },
-    ],
+    array: [],
     textdata:"",
   },
   click:function(){
@@ -110,8 +101,8 @@ Page({
           success:function(){
             var page = getCurrentPages().pop();
             if (page == undefined || page == null) return;
-            page.onReady();
-            console.log("???onLoad");
+            page.onLoad();
+            // console.log("???onLoad");
           }
         })
       }
@@ -135,14 +126,25 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    // var that=this;
+    // var page = getCurrentPages().pop();
+    // console.log(page);
+    // that.setData({
+    //   textdata:false,
+    //   array:false,
+    // });
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    console.log("<KMKMOKM");
+    var that=this;
+    that.setData({
+      textdata:"",
+      array:[],
+    });
   },
 
   /**
