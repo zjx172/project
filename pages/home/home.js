@@ -15,13 +15,44 @@ Page({
     page:0,
     currentlistnum:0,//0为默认 1为点赞 2为热度 区分加载哪种列表
     hidden:true,
+    ngo:false,
     // scrollTop:0,
     scrollHeight:0,
-    triggered:false
+    triggered:false,
+    indicatorDots:true
+  },
+  publish:function(){
+    wx.navigateTo({
+        url:'/pages/demo1/demo1',
+        success:function(){
+                console.log("test");
+        },
+        fail:function(err){
+            console.log(err);
+        }
+    })
+  },
+  previewImage:function(e){
+    let current=e.target.dataset.src;
+    // console.log(e.target.dataset.array);
+    let array=[];
+    e.target.dataset.array.forEach((item)=>{
+            // console.log(item);
+        array.push(item.src);
+    })
+    wx.previewImage({
+        current:current,//当前显示图片
+        urls:array
+    })
+    // console.log(current);
   },
   likelist:function(){
     // console.log('likelist');
     var that=this;
+    that.setData({
+        ngo:false,//显示没有更多
+        hidden:true
+    })
     // console.log(this.data.originalarray);
     // this.setData({
     //     array:that.data.likearray
@@ -37,11 +68,18 @@ Page({
         success (res) {
                 console.log(res.data);
                 that.data.likearray=res.data;
+                // console.log(that.data.array);
+                that.data.array=[];
+                 // console.log(that.data.array);
+                let length=that.data.array.length;
                 console.log("点赞接口");
-                that.data.currentlistnum=1;
+                that.data.currentlistnum=1;//点赞标识
                 that.setData({
                     // originalarray:res.data,
-                  array:that.data.likearray
+                    array:[],
+                    ['array['+length+']']:res.data
+                  // array:that.data.likearray
+                  //
                   // likearray:that.data.likearray
                 });
         }
@@ -60,6 +98,10 @@ Page({
   },
   hotlist:function(){
     var that=this;
+    that.setData({
+        ngo:false,//显示没有更多
+        hidden:true
+    })
     that.data.page=0;
     wx.request({
         url: 'http://192.168.31.249:3001/posts/hotlist',
@@ -72,14 +114,22 @@ Page({
         console.log(res.data);
         that.data.currentlistnum=2;
         that.data.mostlikearray=res.data;
+        that.data.array=[];
+         let length=that.data.array.length;
         that.setData({
-            array:that.data.mostlikearray
+            // array:that.data.mostlikearray
+             array:[],
+             ['array['+length+']']:res.data
         });
         }
     });
   },
   defalutlist:function(){
     var that=this;
+    that.setData({
+        ngo:false,//显示没有更多
+        hidden:true
+    })
     that.data.page=0;
     wx.request({
         url: 'http://192.168.31.249:3001/posts/home',
@@ -92,10 +142,14 @@ Page({
         that.data.originalarray=res.data;
         console.log(that.data.originalarray);
         that.data.currentlistnum=0;
+         that.data.array=[];
+         let length=that.data.array.length;
         // that.setData({likearray:that.data.likearray})
         that.setData({
             // originalarray:res.data,
-            array:res.data,
+            // array:res.data,
+            array:[],
+            ['array['+length+']']:res.data
             // likearray:that.data.likearray
         });
         // console.log(that.data.array)
@@ -115,14 +169,31 @@ Page({
   },
   Submit:function(e){
     var that=this
-    // console.log(e.currentTarget.dataset)
+
+    console.log(e.currentTarget.dataset)
+    console.log(that.data.array)
     // const itemm=e.currentTarget.dataset
     // console.log(item)
+    let ii=0;
+    let jj=0;
+    for(let i=0;i<that.data.array.length;i++){
+        for(let j=0;j<that.data.array[i].length;j++){
+             if(e.currentTarget.dataset.item._id==that.data.array[i][j]._id){
+                console.log("zhaodaole")
+                ii=i;
+                jj=j;
+        }
+        }
+    }
+    // 
+    // 
     const index=e.currentTarget.dataset.index
     const id=e.currentTarget.dataset.item._id
-    var _array = this.data.array
+    var _array = e.currentTarget.dataset.list
     var item=_array[index]
-    var key = "array["+ index + "]"
+    // var newkey="array["+that.data.page+"]["+index+"]"
+    var newkey="array["+ii+"]["+jj+"]"
+    // var key = "array["+ index + "]"
     if(item.like==0){
         item.like=1
         item.likenumber++;
@@ -130,10 +201,12 @@ Page({
         item.like=0
         item.likenumber--;
       }
+           // array:_array,
     this.setData({
-        array:_array
+        [newkey]:item
       },()=>{
         // console.log(this.data.array[index].like)
+        // console.log(this.data.array[index].likenumber)
     })
     // console.log(that.data.openid)
     wx.request({
@@ -145,7 +218,7 @@ Page({
           openid:that.data.openid
       },
         success (res) {
-          // console.log(res.data)
+          console.log(res.data)
         }
     })
   },
@@ -155,6 +228,8 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
+    console.log("??????????????")
+    console.log(that.data.hidden);
     // this.setData({
     //     triggered: true,
     //   })
@@ -178,10 +253,12 @@ Page({
               code: res.code
             },
             success (res) {
-                console.log(res.data);
+                // console.log(res.data);
+                console.log(that.data.page);
                 that.setData({
                     openid:res.data.data.openid
                 })
+                // http://192.168.31.249
                 wx.request({
                     url: 'http://192.168.31.249:3001/posts/home',
                     method:'POST',
@@ -198,9 +275,14 @@ Page({
                         that.data.originalarray=res.data;
                         console.log(that.data.originalarray);
                          // that.setData({likearray:that.data.likearray})
+                          that.data.array=[];
+                        let length=that.data.array.length;
                         that.setData({
                             // originalarray:res.data,
-                            array:res.data,
+                            // 
+                            // array:res.data,
+                            // 
+                            ['array['+length+']']:res.data
                             // likearray:that.data.likearray
                         },function(){
                             wx.hideLoading();//???有延时
@@ -223,6 +305,8 @@ Page({
         else {
             console.log('登录失败！' + res.errMsg)
           }
+      },fail(res){
+        console.log(res)
       }
     })
   },
@@ -287,8 +371,13 @@ Page({
     console.log("lower");
     var that=this;
     console.log(that.data.currentlistnum);
-    that.data.page++;
-    console.log(that.data.page)
+    if(that.data.ngo!=true){
+        that.setData({
+            hidden:true
+        });
+        that.data.page++;
+    }
+    console.log("页数："+that.data.page)
     var str='http://192.168.31.249:3001/posts/';
     switch (that.data.currentlistnum) {
         case 0:
@@ -301,7 +390,6 @@ Page({
             str=str+'hotlist';
             break;
     }
-    console.log(str);
     wx.request({
         url:str,
         method:"POST",
@@ -312,42 +400,77 @@ Page({
         success (res) {
             //显示加载中 用一个字段控制
             console.log('加载新的数据中！')
-            console.log(res.data)
-            switch (that.data.currentlistnum) {
-            case 0:
-                res.data.forEach((item,index)=>{
-                    that.data.originalarray.push(item);
-                })
+            if(res.data.length==0){
+                console.log("没有新的数据了")
                 that.setData({
-                    array:that.data.originalarray
-                },function(){
-                    //取消显示“加载中”
-                    console.log("完成！")
+                    ngo:true,//显示没有更多
+                    hidden:false
                 })
-            break;
-            case 1:
-                res.data.forEach((item,index)=>{
-                    that.data.likearray.push(item);
-                })
-                that.setData({
-                array:that.data.likearray
-                },function(){
-                //取消显示“加载中”
-                console.log("完成！")
-                })
-            break;
-            case 2:
-                res.data.forEach((item,index)=>{
-                    that.data.mostlikearray.push(item);
-                })
-                that.setData({
-                    array:that.data.mostlikearray
-                },function(){
-                //取消显示“加载中”
-                console.log("完成！")
-                })
-            break;
+            }else{
+                console.log(res.data)
+                // console.log(that.data.array);
+                switch (that.data.currentlistnum) {
+                    case 0:
+                        res.data.forEach((item,index)=>{
+                            that.data.originalarray.push(item);
+                        })
+                        let length=that.data.array.length;
+                        console.log(length);
+                        that.setData({
+                            // array:that.data.originalarray
+                            ['array['+length+']']:res.data,
+                            hidden:false
+                        },function(){
+                            //取消显示“加载中”
+                            console.log("完成！")
+                            console.log(that.data.array);
+                            // that.setData({
+                            //     hidden:false
+                            // });
+                        })
+                    break;
+                    case 1:
+                    console.log("????????11111111111111")
+
+                        res.data.forEach((item,index)=>{
+                            that.data.likearray.push(item);
+                        })
+                        length=that.data.array.length;
+                        that.setData({
+                        // array:that.data.likearray
+                         ['array['+length+']']:res.data,
+                         hidden:false
+                        },function(){
+                            //取消显示“加载中”
+                            console.log("完成！")
+                                console.log(that.data.array);
+                            // that.setData({
+                            //     hidden:false
+                            // });
+                        })
+                    break;
+                    case 2:
+                        res.data.forEach((item,index)=>{
+                            that.data.mostlikearray.push(item);
+                        })
+                          // console.log(that.data.array);
+                        length=that.data.array.length;
+                        that.setData({
+                            // array:that.data.mostlikearray
+                             ['array['+length+']']:res.data,
+                             hidden:false
+                        },function(){
+                        //取消显示“加载中”
+                            console.log("完成！")
+                            console.log(that.data.array);
+                            // that.setData({
+                            //     hidden:false
+                            // });
+                        })
+                    break;
+                }
             }
+            console.log(that.data.array);
         },
     })
     //添加加载动画
@@ -357,13 +480,14 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+     console.log("onReady");
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    console.log("???????????/");
+    console.log("onshow");
     // this.onLoad();
   },
 
@@ -386,6 +510,12 @@ Page({
    */
   onPullDownRefresh: function () {
     var that=this;
+    console.log("???????");
+    that.setData({
+        ngo:false,//显示没有更多
+        hidden:true
+    })
+    that.data.page=0;
     // // console.log("tetetete");
     wx.showNavigationBarLoading();//在当前页面显示导航条加载动画
     wx.setNavigationBarTitle({
@@ -407,10 +537,14 @@ Page({
             // })
             that.data.originalarray=res.data;
             console.log(that.data.originalarray);
+            that.data.array=[];
+            let length=that.data.array.length;
              // that.setData({likearray:that.data.likearray})
             that.setData({
                 // originalarray:res.data,
-                array:res.data,
+                // array:res.data,
+                array:[],
+                ['array['+length+']']:res.data
                 // likearray:that.data.likearray
             },function(){
                 // wx.hideLoading();//???有延时
@@ -446,6 +580,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return{
+        title:'test',
+        desc:'test',
+        path:'/pages/home/home'
+    }
   }
 })

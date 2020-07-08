@@ -10,31 +10,40 @@ Page({
   },
   click:function(){
     var that = this;
+    console.log(that.data.array);
     wx.chooseImage({
-      count: 1,//只给选一个
+      count:9,
       sizeType: ['original', 'compressed'],
       sourceType: ['album', 'camera'],
       success (res) {
+        console.log(res);
         // tempFilePath可以作为img标签的src属性显示图片
         // var tempFilePaths = res.tempFilePaths[0]
         // console.log(tempFilePaths);
-        wx.getFileSystemManager().readFile({
-          filePath:res.tempFilePaths[0],
+        for(let i=0;i<res.tempFilePaths.length;i++){
+              wx.getFileSystemManager().readFile({
+          filePath:res.tempFilePaths[i],
           encoding:'base64',
           success:res=>{
-        //    console.log('data:image/png;base64,'+res.data);
-
             var tempFilePaths='data:image/png;base64,'+res.data;
             const item={
               src:tempFilePaths
             };
+            // console.log(that.data.array);
             that.data.array.push(item)
             that.setData({
               array:that.data.array
+              },() => {
+              console.log('赋值成功')
             });
-            console.log(that.data.array);
+            // that.setData({
+            //   array:that.data.array
+            // });
+            // console.log(that.data.array);
           }
         })
+        console.log(">>>>>")
+        }
         // console.log(tempFilePaths);
         // const item={
         //   src:tempFilePaths
@@ -139,12 +148,12 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    console.log("<KMKMOKM");
-    var that=this;
-    that.setData({
-      textdata:"",
-      array:[],
-    });
+    // console.log("<KMKMOKM");
+    // var that=this;
+    // that.setData({
+    //   textdata:"",
+    //   array:[],
+    // });
   },
 
   /**

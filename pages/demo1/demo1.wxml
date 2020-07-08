@@ -2,13 +2,14 @@
 <view class="container">
     <view class="topbar">
     </view>
-    <form bindsubmit="bindFormSubmit">
+    <view >
+          <form bindsubmit="bindFormSubmit">
         <view class="cards">
             <view class="card">
-                <view class="title">添加图片</view>
+                <view class="pchtoo">添加图片</view>
                 <view class="photowrap">
                     <view  wx:for="{{array}}" wx:for-item="item">
-                        <image class="photo" mode="aspectFill" src="{{item.src}}"></image>
+                        <image class="photo" mode="aspectFit" src="{{item.src}}"></image>
                     </view>
                     <view class="photo" bindtap="click">
                         <view class="add"></view>
@@ -20,7 +21,7 @@
             <view class="card word">
                 <view class="title">添加文字</view>
                 <view class="article">
-                    <textarea name="textarea" class="text" placeholder-class="place-holder" auto-height  placeholder="点击此处输入文字"  />
+                    <textarea name="textarea" class="text" placeholder-class="place-holder" auto-height  maxlength="-1" auto-focus placeholder="点击此处输入文字"  />
                 </view>
                 <!-- <view class="word"></view> -->
             </view>
@@ -30,4 +31,5 @@
         <!-- <view class="button" bindtap="connectt">确认发布</view> -->
         <!-- <button class="button" form-type="submit">确认发布</view> -->
     </form>
+    </view>
 </view>

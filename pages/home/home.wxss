@@ -9,6 +9,30 @@
     color:rgba(255,255,255,1);
     /*line-height:40px;*/
 }
+button::after {
+    border: none;
+}
+button{
+    background-color: #fff;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+.share{
+    width:40rpx;
+    height:40rpx;
+}
+.fontloading{
+    font-size:30rpx;
+    font-family:inpinheiti;
+    color:grey;
+}
+.loading{
+    display: flex;
+    justify-content: center;
+    margin-top:30rpx;
+}
 .inside-word{
     padding-top:66rpx;
     display: flex;
@@ -51,7 +75,14 @@
     font-family:SourceHanSansCN;
     font-weight:bold;
     color:rgba(58,48,77,1);
-    line-height:70rpx;
+    margin-top:20rpx;
+    padding-left: 20rpx;
+    padding-right: 20rpx;
+    box-sizing: border-box;
+    word-break: keep-all;
+    word-wrap: break-word;
+    white-space: pre-line;
+
 }
 .photo-swiper{
     height: 100%;
@@ -67,14 +98,30 @@
 }
 .like{
     /*background: red;*/
+    display: flex;
+    justify-content:space-between;
+    padding-right: 20rpx;
+    padding-left: 20rpx;
+    padding-top: 20rpx;
+}
+.group{
+   display: inline-flex;
+   justify-content: center;
+   align-items: center;
+}
+.group text{
+    margin-left:20rpx;
+    font-size: 30rpx;
+    font-family:PingFang SC;
+    color:black;
 }
 .aixin{
-    width: 56rpx;
-    height:49rpx;
+    width: 55rpx;
+    height:46rpx;
 }
 .redh{
-    width: 56rpx;
-    height:56rpx;
+    width: 50rpx;
+    height:50rpx;
 }
 .photo{
     width:683rpx;
