@@ -21,12 +21,8 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/demo1/demo1",
-        "text": "发布"
-      },
-      {
         "pagePath": "pages/home/home",
-        "text": "首页"
+        "text": "吃喝玩乐"
       }
     ]
   }
